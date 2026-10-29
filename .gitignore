@@ -2,3 +2,7 @@
 build/
 *.class
 .DS_Store
+
+build/
+*.class
+.DS_Store
