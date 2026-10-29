@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Banking System
 
 Small Java Swing desktop application for SE-4111 Phase 2. Requires JDK 17 or newer. No external libraries.
@@ -28,3 +29,7 @@ No repository has been published. Create a repository in your own GitHub account
 The five application source files implement FR-1 account information, FR-2 deposit, FR-3 withdrawal, FR-4 transfer, FR-5 transaction history, and FR-6 automatic balance refresh. The design uses MVC, Observer, immutable AccountId with RI/AF, and explicit equals/hashCode for map keys. Screenshot generation and verification helpers are not included in the application source.
 
 Opening and resizing the desktop window still requires a manual check.
+=======
+# Banking-System
+Banking System
+>>>>>>> 87740643cb4c2da47bb68c0f6c51ffbaaf50a127
