@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # Banking System
 
-Small Java Swing desktop application for SE-4111 Phase 2. Requires JDK 17 or newer. No external libraries.
+Small Java Swing desktop application for SE-4111. Requires JDK 17 or newer. No external libraries.
 
 ## Run
 From this folder:
