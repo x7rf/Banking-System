@@ -1,3 +1,5 @@
+package com.example.bankingsystem;
+
 import javax.swing.*;
 public final class BankApp {
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package com.example.bankingsystem;
+
 import java.util.Objects;
 
 public final class AccountId {

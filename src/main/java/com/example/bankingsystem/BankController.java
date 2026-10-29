@@ -1,3 +1,5 @@
+package com.example.bankingsystem;
+
 import java.math.BigDecimal;
 
 public final class BankController {
