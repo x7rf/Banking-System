@@ -4,6 +4,61 @@ Java Swing desktop project using MVC, Observer, and an immutable account identif
 
 ## Requirements
 JDK 25 or newer and Apache Maven 3.9 or newer. The first Maven build needs internet access to download plugins and the test dependency.
+# Banking System
+
+A small desktop banking application written in Java with Swing, built for **SE-4111 – High-Quality Software Construction**. The goal of the project is not a large feature set but the quality of the construction: a clear MVC structure, the Observer pattern, an immutable abstract data type with a documented representation invariant and abstraction function, and a correct `equals()`/`hashCode()` implementation.
+
+## Demo video
+
+Watch the demo on YouTube
+
+## Features
+
+| ID | Feature |
+|----|---------|
+| FR-1 | View account information (account number, holder, current balance) |
+| FR-2 | Deposit money |
+| FR-3 | Withdraw money |
+| FR-4 | Transfer money between accounts |
+| FR-5 | View transaction history (type, amount, date/time, resulting balance) |
+| FR-6 | Balance and history update automatically after every successful operation |
+
+Invalid requests (zero or negative amounts, amounts with more than two decimal places, insufficient funds, unknown accounts, transfers to the same account) are rejected with a message. A rejected request changes no balance or history.
+
+The application starts with two sample accounts: Ahmed Ali (`100001`, SAR 1,000.00) and Sara Hassan (`100002`, SAR 500.00). Data is kept in memory and resets when the application closes.
+
+## Design
+
+### MVC
+
+| Part | Class | Responsibility |
+|------|-------|----------------|
+| Model | `BankModel` | Owns account holders, balances and transaction records, and enforces the banking rules even when called without the GUI |
+| View | `BankView` | Displays the selected account and its history |
+| Controller | `BankController` | Reads user input, checks its format, calls the model, and shows a success or error message |
+| Wiring | `BankApp` | Creates the three parts and connects them |
+
+### Observer pattern
+
+`BankView` implements `BankModel.Listener` and registers with the model. After every successful operation the model calls `modelChanged()`, and the view re-reads the balance and history. The model only knows the `Listener` interface, so it does not depend on Swing. A transfer sends one notification, after both accounts have been updated.
+
+### Immutable ADT: `AccountId`
+
+`AccountId` represents a six-digit account number.
+
+- **Representation:** `private final String value`
+- **Representation invariant (RI):** `value != null` and `value` matches `[0-9]{6}`
+- **Abstraction function (AF):** `AF(value)` is the bank account identifier represented by the six characters in `value`
+
+The class is `final`, the field is `private final`, there are no setters, and the constructor throws `IllegalArgumentException` for null or badly formatted input.
+
+### Equality
+
+`AccountId` implements `equals()` and `hashCode()` using its account-number value. It is used as a key in the model's maps, so two separately created identifiers for the same account (for example `new AccountId("100001")`) retrieve the same data.
+
+### Money
+
+Money is stored as `BigDecimal` with a scale of two decimal places, which avoids floating-point rounding errors. Histories are returned as unmodifiable snapshots.
 
 ## Layout
 ```text
@@ -45,6 +100,24 @@ The full main class name is com.example.bankingsystem.BankApp.
 mvn clean package
 java -cp target/classes com.example.bankingsystem.BankApp
 ```
+
+## Requirements
+
+- JDK 17 or newer
+- Maven
+- No external runtime libraries
+
+## Tests
+
+The tests are in `BankModelTest.java` and exercise the model without the GUI. Run them with:
+
+```sh
+mvn clean test
+```
+
+## Scope and limitations
+
+Account creation, authentication and a database are outside the scope of this project. Operations run sequentially on the Swing event thread. A later version could add persistent storage and more accounts; that would also need transaction handling and a clear concurrency policy.
 
 ## Replace the old layout in an existing Git repository
 Keep your existing .git directory. Replace the old src directory with this src directory (do not leave the old src/*.java files alongside it), and copy pom.xml, .gitignore and README.md into the project root. Then run the Maven checks above before committing:
