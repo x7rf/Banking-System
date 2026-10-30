@@ -10,7 +10,7 @@ A small desktop banking application written in Java with Swing, built for **SE-4
 
 ## Demo video
 
-Watch the demo on YouTube
+Watch the demo on YouTube ( https://youtu.be/3RUvxvAbBkw?si=itGuJ_FMFTPdH0gm )
 
 ## Features
 
